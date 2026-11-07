@@ -1,0 +1,304 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>それ、どっちのゴミ？</title>
+
+    <link rel="stylesheet" href="{% static 'game/css/style.css' %}">
+</head>
+
+<body>
+
+    <main class="game-container">
+
+        <section id="title-screen">
+
+            <header>
+                <h1>
+                    🗑️ それ、どっちのゴミ？
+                </h1>
+
+                <p>
+                    ゴミを正しく分別しよう！
+                </p>
+
+            </header>
+
+
+            <!-- ゲーム説明 -->
+            <section class="title-guide">
+
+                <h2>
+                    🎯 ルールは簡単
+                </h2>
+
+                <p>
+                    表示されたゴミを見て、
+                    正しい分別を3つから選んでください。
+                </p>
+
+                <div class="category-guide">
+
+                    <span>
+                        🔥 燃やすごみ
+                    </span>
+
+                    <span>
+                        🔧 金属・陶器・ガラス
+                    </span>
+
+                    <span>
+                        ♻️ 資源
+                    </span>
+
+                </div>
+
+                <p>
+                    全10問。
+                    後半になるほど難しい問題が登場します。
+                </p>
+
+            </section>
+
+
+            <!-- SCORE説明 -->
+            <section class="title-guide">
+
+                <h2>
+                    🔥 COMBOをつなげよう
+                </h2>
+
+                <p>
+                    正解するとSCOREを獲得。
+                    連続正解するとCOMBOが伸びます。
+                </p>
+
+                <p>
+                    最後はSCOREとMAX COMBOから
+                    FINAL SCOREを計算します。
+                </p>
+
+            </section>
+
+
+            <!-- BEST SCORE -->
+            <section class="best-score-area">
+
+                <p>
+                    BEST SCORE
+                </p>
+
+                <strong id="best-score">
+                    🏆 ---
+                </strong>
+
+            </section>
+
+
+            <!-- 注意書き -->
+            <section class="title-notice">
+
+                <p>
+                    ※このゲームは新宿区の分別ルールを参考にしています。
+                    ごみの分別方法は地域や素材、大きさ、汚れの状態などによって異なります。
+                </p>
+
+                <p>
+                    実際にごみを出す際は、
+                    お住まいの自治体の案内をご確認ください。
+                </p>
+
+            </section>
+
+
+            <!-- GAME START -->
+            <button
+                id="start-button"
+                type="button"
+            >
+                🗑️ GAME START
+            </button>
+
+            <div class="portal-link-section">
+
+                <p>
+                    ほかのゲームも5分で遊べます
+                </p>
+
+                <a
+                    href="https://five-minute-games-10zm.onrender.com/"
+                    class="portal-link"
+                >
+                    🎮 ほかの5分ゲームを見る
+                </a>
+
+            </div>
+
+        </section>
+
+        <section id="game-screen" hidden>
+            <header class="game-header">
+                <h1>🗑️ それ、どっちのゴミ？</h1>
+                <p class="game-subtitle">
+                    正しく分別できますか？
+                </p>
+            </header>
+
+
+            <section class="status-area">
+
+                <div class="status-item">
+                    <span>QUESTION</span>
+                    <strong id="question-number">1 / 10</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>SCORE</span>
+                    <strong id="score">0</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>COMBO</span>
+                    <strong id="combo">0</strong>
+                </div>
+
+            </section>
+
+
+            <section class="question-area" id="question-area">
+
+                <p class="question-label">
+                    このゴミはどれ？
+                </p>
+
+                <div class="garbage-card">
+
+                    <div class="garbage-icon" id="garbage-icon">
+                    </div>
+
+                    <h2 class="garbage-name" id="garbage-name">
+                    </h2>
+
+                </div>
+
+            </section>
+
+
+            <section class="choices" id="choices">
+
+                <button
+                    class="choice-button burnable"
+                    data-category="burnable"
+                >
+                    <span class="choice-icon">🔥</span>
+                    <span>燃やすごみ</span>
+                </button>
+
+                <button
+                    class="choice-button non-burnable"
+                    data-category="non-burnable"
+                >
+                    <span class="choice-icon">🔧</span>
+                    <span>金属・陶器・ガラス</span>
+                </button>
+
+                <button
+                    class="choice-button recyclable"
+                    data-category="recyclable"
+                >
+                    <span class="choice-icon">♻️</span>
+                    <span>資源</span>
+                </button>
+
+            </section>
+
+
+            <section class="answer-area">
+
+                <p class="answer-message">
+                    3つから選んでください
+                </p>
+
+                <p class="answer-explanation">
+                    正解すると、ここに分別の解説が表示されます。
+                </p>
+
+                <button id="next-button" type="button" hidden>
+                    次の問題へ →
+                </button>
+
+            </section>
+
+
+            <footer class="game-footer">
+
+                <p>
+                    ※このゲームは新宿区の分別ルールを参考にしています。
+                    実際にごみを出す際は、お住まいの自治体の案内をご確認ください。
+                </p>
+
+            </footer>
+        </section>
+
+        <section id="result-screen" hidden>
+
+            <p>RESULT</p>
+
+            <h2>🎉 おつかれさまでした！</h2>
+
+            <div>
+                <p>
+                    正解数
+                    <strong id="result-correct">0 / 10</strong>
+                </p>
+
+                <p>
+                    SCORE
+                    <strong id="result-score">0</strong>
+                </p>
+
+                <p>
+                    MAX COMBO
+                    <strong id="result-max-combo">0</strong>
+                </p>
+
+                <p>
+                    FINAL SCORE
+                    <strong id="result-final-score">
+                        0
+                    </strong>
+                </p>
+
+                <p>
+                    RANK
+                    <strong id="result-rank">-</strong>
+                </p>
+            </div>
+
+            <p id="result-message">
+                分別レベルを判定中...
+            </p>
+
+            <button id="retry-button" type="button">
+                もう一度遊ぶ
+            </button>
+
+            <button id="back-title-button" type="button">
+                タイトルへ戻る
+            </button>
+
+        </section>
+
+    </main>
+
+    
+    <script src="{% static 'game/js/game.js' %}"></script>
+
+</body>
+
+</html>
